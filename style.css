@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    background: #FCEFEF; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Open Sans", sans-serif;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 90vh; /* Điều chỉnh chiều cao của khung chat */
+}
+
+.chat-header {
+    background: #FFB6B9;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.chat-body {
+    flex-grow: 1;
+    padding: 25px;
+    overflow-y: auto;
+    background: #FFF5F5;
+    transition: background 0.3s;
+}
+
+.chat-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-body::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.message {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 15px;
+}
+
+.message svg {
+    width: 30px; /* Điều chỉnh kích thước icon bot */
+    height: 30px;
+    min-width: 30px; /* Đảm bảo icon không bị co lại */
+    border-radius: 50%;
+    margin-right: 10px;
+    background-color: #4A90E2; /* Màu nền cho icon bot */
+    padding: 5px;
+    fill: #fff; /* Màu icon */
+}
+
+.bot-message svg {
+    background-color: #FFB6B9;
+}
+
+.user-message {
+    justify-content: flex-end;
+}
+
+.message-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.user-message .message-text {
+    background: #D3F8E2; 
+    color: #333;
+    border-radius: 20px 20px 0 20px;
+    padding: 14px 20px;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.bot-message .message-text {
+    background: #FFF; /* trắng tinh tế */
+    color: #444;
+    border-radius: 20px 20px 20px 0;
+    padding: 14px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.bot-message.thinking .message-text {
+    background: #f0f0f0;
+}
+
+.thinking .message-text {
+    display: flex;
+    align-items: center;
+}
+
+.thinking-indicator {
+    display: flex;
+    flex-direction: row; /* Đảm bảo các dot nằm ngang */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px; /* Khoảng cách giữa các dot */
+}
+
+.thinking .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #999;
+    border-radius: 50%;
+    margin: 0 2px;
+    animation: bounce 0.8s infinite ease-in-out;
+}
+
+.thinking .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.thinking .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-5px);
+    }
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    background: #fff;
+}
+
+.message-input {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    resize: none;
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.message-input:focus {
+    outline: none;
+    border-color: #4A90E2;
+}
+
+#send-message {
+    background: #4A90E2;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background 0.3s ease;
+}
+
+#send-message:hover {
+    background: #3a7bd5;
+}
+
+#send-message:active {
+    transform: scale(0.95);
+}
+
+/* Material Symbols Rounded icon styling */
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.message {
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

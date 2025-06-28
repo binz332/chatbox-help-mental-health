@@ -1,0 +1,4 @@
+netstat -ano | findstr :5500`
+
+tasklist | findstr 14220`
+
