@@ -1,6 +1,7 @@
 const chatBody = document.querySelector(".chat-body")
 const messageInput = document.querySelector(".message-input")
 const sendMessageButton = document.querySelector("#send-message") 
+
 const API_KEY = "AIzaSyAOdvs43HRJSs5EAAvBJzt0Viq-WlvNH3Q"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
@@ -8,6 +9,7 @@ const userData = {
     message: null
 }
 
+// Create message element with dynamic classes and return it
 const createMessageElement = (content, ...classes) => {
     const div = document.createElement("div");
     div.classList.add("message", ...classes);
@@ -15,9 +17,11 @@ const createMessageElement = (content, ...classes) => {
     return div;
 }
 
+// Generate bot response using AI
 const generateBotResponse = async (incomingMessageDiv) => {
     const messageElement = incomingMessageDiv.querySelector(".message-text");
 
+    // API request options
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,22 +56,24 @@ Ví dụ:
     }
 
     try {
+        //Fetch bot response from API
         const response = await fetch(API_URL, requestOptions);
         const data = await response.json();
         if (!response.ok) throw new Error(data.error.message);
 
+        //Extract and display bot's response text
         const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
         messageElement.innerText = apiResponseText;
     } catch (error) {
-        console.error("Lỗi khi tạo phản hồi của bot:", error); // Sử dụng console.error
+        console.error("Lỗi khi tạo phản hồi của bot:", error); 
         messageElement.innerText = "Xin lỗi, đã có lỗi xảy ra. Vui lòng thử lại.";
     } finally {
         incomingMessageDiv.classList.remove("thinking");
     }
 }
 
-
-const handOutgoingMessage = (e = null) => { 
+// Handle outgoing user messages
+const handOutgoingMessage = (e = null) => {
     if (e) {
         e.preventDefault();
     }
@@ -98,7 +104,7 @@ const handOutgoingMessage = (e = null) => {
 
         const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
         chatBody.appendChild(incomingMessageDiv);
-        generateBotResponse(incomingMessageDiv); // Truyền incomingMessageDiv vào đây
+        generateBotResponse(incomingMessageDiv); 
     }, 600);
 }
 
@@ -111,3 +117,9 @@ messageInput.addEventListener("keydown", (e) => {
 });
 
 sendMessageButton.addEventListener("click", handOutgoingMessage); 
+
+messageInput.addEventListener("focus", () => {
+    setTimeout(() => {
+        chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
+    }, 300);
+});
