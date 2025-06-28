@@ -1,15 +1,13 @@
 const chatBody = document.querySelector(".chat-body")
 const messageInput = document.querySelector(".message-input")
-const sendMessageButton = document.querySelector("#send-message") // Bỏ dấu chấm thừa
-
-const API_KEY = "AIzaSyAOdvs43HRJSs5EAAvBJzt0Viq-WlvNH3Q"; // Hãy thay thế bằng API Key thực tế của bạn
+const sendMessageButton = document.querySelector("#send-message") 
+const API_KEY = "AIzaSyAOdvs43HRJSs5EAAvBJzt0Viq-WlvNH3Q"; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
 const userData = {
     message: null
 }
 
-// Create message element with dynamic classes and return it
 const createMessageElement = (content, ...classes) => {
     const div = document.createElement("div");
     div.classList.add("message", ...classes);
@@ -17,12 +15,9 @@ const createMessageElement = (content, ...classes) => {
     return div;
 }
 
-// Generate bot response using AI
-// Cần truyền incomingMessageDiv vào làm tham số
 const generateBotResponse = async (incomingMessageDiv) => {
     const messageElement = incomingMessageDiv.querySelector(".message-text");
 
-    // API request options
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -57,12 +52,10 @@ Ví dụ:
     }
 
     try {
-        //Fetch bot response from API
         const response = await fetch(API_URL, requestOptions);
         const data = await response.json();
         if (!response.ok) throw new Error(data.error.message);
 
-        //Extract and display bot's response text
         const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
         messageElement.innerText = apiResponseText;
     } catch (error) {
@@ -73,10 +66,9 @@ Ví dụ:
     }
 }
 
-// Handle outgoing user messages
-// Sửa để có thể nhận sự kiện (e) hoặc không
-const handOutgoingMessage = (e = null) => { // Đặt e mặc định là null để linh hoạt
-    if (e) { // Chỉ gọi preventDefault nếu e tồn tại (tức là từ sự kiện click)
+
+const handOutgoingMessage = (e = null) => { 
+    if (e) {
         e.preventDefault();
     }
 
@@ -111,11 +103,11 @@ const handOutgoingMessage = (e = null) => { // Đặt e mặc định là null �
 }
 
 // Handle Enter keypress for sending messages
-messageInput.addEventListener("keydown", (e) => { // Thêm (e) ở đây
-    if (e.key === "Enter" && !e.shiftKey) { // Thêm !e.shiftKey để Enter + Shift không gửi
-        e.preventDefault(); // Ngăn hành vi xuống dòng mặc định của Enter trong textarea
-        handOutgoingMessage(); // Gọi hàm gửi tin nhắn
+messageInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { 
+        e.preventDefault(); 
+        handOutgoingMessage(); 
     }
 });
 
-sendMessageButton.addEventListener("click", handOutgoingMessage); // Không cần arrow function nếu chỉ gọi hàm
+sendMessageButton.addEventListener("click", handOutgoingMessage); 
